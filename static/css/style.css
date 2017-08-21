@@ -120,7 +120,7 @@ body {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    background-color: #fbfbfb;
+    background: #fbfbfb url(../images/square.png) repeat;
     flex: 1;
     -webkit-box-align: center;
     -webkit-align-items: center;
