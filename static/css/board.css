@@ -1,0 +1,29 @@
+.row {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    background: #333333;
+}
+
+.cell {
+    width: 9px;
+    height: 9px;
+    margin: 0px;
+    padding: 0px;
+    border-top: 1px solid #666666;
+    border-left: 1px solid #666666;
+}
+
+.cell:last-child {
+    border-right: 1px solid #666666;
+    width: 10px;
+}
+
+.row:last-child .cell {
+    border-bottom: 1px solid #666666;
+    height: 10px;
+}
+
+.select {
+    background: red;
+}
