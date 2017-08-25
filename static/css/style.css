@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 html {
     height: 100%;
 }
@@ -130,6 +139,10 @@ body {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
+}
+
+.content-body {
+    position: relative;
 }
 
 .footer {

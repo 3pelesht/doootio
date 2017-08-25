@@ -1,3 +1,6 @@
+#table {
+    margin-bottom: 0.5rem;
+}
 .row {
     margin: 0px;
     padding: 0px;
@@ -26,4 +29,74 @@
 
 .select {
     background: red;
+}
+
+.tools.horizontal {
+    display: flex;
+    margin-bottom: 0.5rem;
+    border-radius: 3px;
+    justify-content: space-between;
+}
+
+.tools.horizontal > div {
+    display: flex;
+}
+
+.tools span {
+    width: 32px;
+    height: 32px;
+    background-color: #fff;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 2px;
+}
+
+.tools.horizontal span {
+    /*margin-right: 8px;*/
+}
+
+.tools.horizontal label {
+    margin: 0;
+    line-height: 32px;
+    width: 80px;
+    padding: 0 5px;
+    background-color: #ececec;
+}
+
+.tools.vertical {
+    position: absolute;
+    top: 0;
+    left: -2.5rem;
+}
+
+.tools.vertical span {
+    margin-bottom: 8px;
+    display: block;
+}
+
+.frames {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.frames .icon-arrow-left2, .frames .icon-arrow-right2 {
+    height: 27px;
+    line-height: 27px;
+}
+
+.frames .icon-arrow-left2 {margin-right: 10px;}
+.frames .icon-arrow-right2 {margin-left: 10px;}
+
+.frames .frame {
+    width: 48px;
+    height: 27px;
+    box-shadow: 0 0 1px #666;
+    line-height: 27px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.frames .frame:nth-last-child(2) {
+    margin: 0;
 }
