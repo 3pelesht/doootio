@@ -1,30 +1,34 @@
 #table {
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
 }
+
 .row {
-    margin: 0px;
-    padding: 0px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    background: #333333;
+
+    background: #333;
 }
 
 .cell {
     width: 9px;
     height: 9px;
-    margin: 0px;
-    padding: 0px;
-    border-top: 1px solid #666666;
-    border-left: 1px solid #666666;
+
+    border-top: 1px solid #666;
+    border-left: 1px solid #666;
 }
 
 .cell:last-child {
-    border-right: 1px solid #666666;
     width: 10px;
+
+    border-right: 1px solid #666;
 }
 
 .row:last-child .cell {
-    border-bottom: 1px solid #666666;
     height: 10px;
+
+    border-bottom: 1px solid #666;
 }
 
 .select {
@@ -32,34 +36,45 @@
 }
 
 .tools.horizontal {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    margin-bottom: 0.5rem;
+
+    margin-bottom: .5rem;
+
     border-radius: 3px;
+
+    -ms-flex-pack: justify;
     justify-content: space-between;
 }
 
-.tools.horizontal > div {
+.tools.horizontal>div {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
 }
 
 .tools span {
+    line-height: 32px;
+
     width: 32px;
     height: 32px;
-    background-color: #fff;
-    line-height: 32px;
-    text-align: center;
-    border-radius: 2px;
-}
 
-.tools.horizontal span {
-    /*margin-right: 8px;*/
+    text-align: center;
+
+    border-radius: 2px;
+    background-color: #fff;
 }
 
 .tools.horizontal label {
-    margin: 0;
     line-height: 32px;
+
     width: 80px;
+    margin: 0;
     padding: 0 5px;
+
     background-color: #ececec;
 }
 
@@ -70,31 +85,49 @@
 }
 
 .tools.vertical span {
-    margin-bottom: 8px;
     display: block;
+
+    margin-bottom: 8px;
 }
 
 .frames {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+
     width: 100%;
+
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
-.frames .icon-arrow-left2, .frames .icon-arrow-right2 {
-    height: 27px;
+.frames .icon-arrow-left2,
+.frames .icon-arrow-right2 {
     line-height: 27px;
+
+    height: 27px;
 }
 
-.frames .icon-arrow-left2 {margin-right: 10px;}
-.frames .icon-arrow-right2 {margin-left: 10px;}
+.frames .icon-arrow-left2 {
+    margin-right: 10px;
+}
+
+.frames .icon-arrow-right2 {
+    margin-left: 10px;
+}
 
 .frames .frame {
+    line-height: 27px;
+
     width: 48px;
     height: 27px;
-    box-shadow: 0 0 1px #666;
-    line-height: 27px;
-    text-align: center;
     margin-right: 10px;
+
+    cursor: default;
+    text-align: center;
+
+    box-shadow: 0 0 1px #666;
 }
 
 .frames .frame:nth-last-child(2) {
