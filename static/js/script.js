@@ -1,3 +1,5 @@
+var map = {};
+
 function createElement()
 {
 	for(var i = 0; i < 36; i++)
@@ -8,8 +10,8 @@ function createElement()
 		for (var j = 0; j < 64 ; j++)
 		{
 			var cell = document.createElement('div');
-			cell.setAttribute('class', 'cell');
-
+			cell.setAttribute('data-cell', '');
+			cell.dootioLocation = {'row' : i, 'cell' : j};
 			row.appendChild(cell);
 		}
 
@@ -17,10 +19,21 @@ function createElement()
 	}
 }
 createElement();
-$("#table").bind('mousedown', function(event){
-	event.target.classList.add('selected');
-	$(this).bind('mousemove.ifDOwn', function(event){
-		event.target.classList.add('selected');
+function rgb2hex(rgb){
+	rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+	return (rgb && rgb.length === 4) ?
+		("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+		("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+		("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+}
+$("#table").bind('mousedown', function(event)
+{
+
+	drow.call(event.target);
+
+	$(this).bind('mousemove.ifDOwn', function(event)
+	{
+		drow.call(event.target);
 	});
 });
 
@@ -28,48 +41,29 @@ $(document).on('mouseup', function(){
 	$("#table").unbind('mousemove.ifDOwn');
 });
 
+function drow()
+{
+	var eraser = $('#eraser').is('[data-active]');
+	var color_select = $('#color-select').css('background-color');
+	var map_name = this.dootioLocation.row + '_' + this.dootioLocation.cell;
+	if (eraser)
+	{
+		this.style.backgroundColor = "";
+		if(map[map_name])
+		{
+			delete map[map_name];
+		}
+	}
+	else
+	{
+		this.style.backgroundColor = color_select;
+		map[map_name] = {
+			row : this.dootioLocation.row,
+			cell : this.dootioLocation.cell,
+			color : rgb2hex(color_select)
+		};
+	}
 
+	console.log(map);
 
-
-//Select Cells and add "selected" to Classlist
-//
-
-
-//check for remove the select class
-// Element.prototype.hasClass = function(className) {
-//     return this.selected && new RegExp("(^|\\s)" + selected + "(\\s|$)").test(this.selected);
-// };
-
-// document.getElementsByClassName("selected").classList.toggle(" ");
-
-// $(function()
-// {
-//     $( "#selectable" ).bind("mousedown", function(event, ui)
-//     {
-//         var result = $( ".cell" ).empty();
-//         event.ctrlKey = true;
-//     });
-
-//     $( "#selectable" ).selectable();
-
-// });
-
-// cell.addEventListene('mousedown', fuction(){
-	// this.addClass('selected');
-
-		// this.mousemove(function(event)
-		// {
-
-		// this.addClass('selected');
-
-		// });
-// });
-
-// var cell = document.getElementsByClassName('cell');
-
-// 	this.('mousedown', function()
-// 	{
-// 		this.addClass('selected');
-// 		this.addEventListene('mousemove', )
-
-// 	});
+}

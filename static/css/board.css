@@ -11,7 +11,7 @@
     background: #333;
 }
 
-.cell {
+[data-cell] {
     width: 9px;
     height: 9px;
 
@@ -19,13 +19,13 @@
     border-left: 1px solid #666;
 }
 
-.cell:last-child {
+[data-cell]:last-child {
     width: 10px;
 
     border-right: 1px solid #666;
 }
 
-.row:last-child .cell {
+.row:last-child [data-cell] {
     height: 10px;
 
     border-bottom: 1px solid #666;
