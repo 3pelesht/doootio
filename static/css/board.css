@@ -31,10 +31,13 @@
     border-bottom: 1px solid #666;
 }
 
-.select {
+.selected {
     background: red;
 }
 
+#selectable{
+    background-color: red;
+}
 .tools.horizontal {
     display: -webkit-box;
     display: -webkit-flex;
