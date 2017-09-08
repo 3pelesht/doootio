@@ -1,14 +1,23 @@
-var map = {};
+var rows = 36;
+var cols = 64;
+var map  = [];
+var start =
+{
+	x: 0,
+	y: 0
+};
 
 function createElement()
 {
-	for(var i = 0; i < 36; i++)
+	for (var i = 0; i < rows; i++)
 	{
+		map[i] = [];
 		var row = document.createElement('div');
 		row.setAttribute('class', 'row');
 
-		for (var j = 0; j < 64 ; j++)
+		for (var j = 0; j < cols ; j++)
 		{
+			map[i][j] = null;
 			var cell = document.createElement('div');
 			cell.setAttribute('data-cell', '');
 			cell.dootioLocation = {'row' : i, 'cell' : j};
@@ -18,14 +27,18 @@ function createElement()
 		document.getElementById('table').appendChild(row);
 	}
 }
+
 createElement();
-function rgb2hex(rgb){
+
+function rgb2hex(rgb)
+{
 	rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
 	return (rgb && rgb.length === 4) ?
 		("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
 		("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
 		("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
+
 $("#table").bind('mousedown', function(event)
 {
 
@@ -44,15 +57,14 @@ $(document).on('mouseup', function(){
 function drow()
 {
 	var mode = $('.draw-mode[data-active]').attr('id');
-	var map_name = this.dootioLocation.row + '_' + this.dootioLocation.cell;
 	var color_select = $('#color-select').css('background-color');
 	switch(mode)
 	{
 		case 'eraser':
 			this.style.backgroundColor = "";
-			if(map[map_name])
+			if(map[this.dootioLocation.row + start.y])
 			{
-				delete map[map_name];
+				map[this.dootioLocation.row + start.y][this.dootioLocation.cell + start.x] = null;
 			}
 			break;
 		case 'eyedropper':
@@ -65,10 +77,9 @@ function drow()
 			break;
 		default:
 			this.style.backgroundColor = color_select;
-			map[map_name] = {
-				row : this.dootioLocation.row,
-				cell : this.dootioLocation.cell,
-				color : rgb2hex(color_select)
+			map[this.dootioLocation.row + start.y][this.dootioLocation.cell + start.x] =
+			{
+				color : '#' + rgb2hex(color_select)
 			};
 			break;
 	}
@@ -96,4 +107,86 @@ $('.draw-mode').click(function(e)
 	$(this).attr('data-active', '');
 });
 
+$('[data-shift]').click(function(e)
+{
+	var shift = $(this).attr('data-shift');
+	switch(shift)
+	{
+		case 'up':
+			map.unshift([]);
+			start.y++;
 
+			console.log(map.length);
+			for (var i = 1; i < map.length - 1; i++)
+			{
+				map[i - 1] = map[i];
+			}
+			$('[data-cell]').css({
+				'background-color': 'initial'
+			});
+			$('.row').each(function(i)
+			{
+				$('[data-cell]', this).each(function(j)
+				{
+					if(!map[i + start.y]) return;
+					var hasColor = map[i + start.y][j + start.x];
+					if (hasColor)
+					{
+						$(this).css({
+							'background-color': hasColor.color
+						});
+					}
+				});
+			});
+			break;
+		case 'down':
+			if(start.y - 1 < 0){
+				map.push([]);
+				start.y = 0
+				for (var i = map.length - 2; i >= 0; i--)
+				{
+					map[i + 1] = map[i];
+				}
+				map[0] = null;
+			}
+			else
+			{
+				start.y--
+			}
+			console.log(start.y);
+			console.log(map.length);
+			$('[data-cell]').css({
+				'background-color': 'initial'
+			});
+			$('.row').each(function(i)
+			{
+				if (!map[i + start.y] || map[i + start.y].length == 0) return;
+				$('[data-cell]', this).each(function(j)
+				{
+					var hasColor = map[i + start.y][j + start.x];
+					if (hasColor)
+					{
+						$(this).css({
+							'background-color': hasColor.color
+						});
+					}
+				});
+			});
+			break;
+		case 'right':
+			for (var i = 0; i < map.length; i++)
+			{
+				map[i].push(null);
+			}
+			start.x--;
+			break;
+
+		case 'left':
+			for (var i = 0; i < map.length; i++)
+			{
+				map[i].unshift(null);
+			}
+			start.x++;
+			break;
+	}
+});
