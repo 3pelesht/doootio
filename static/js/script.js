@@ -64,6 +64,20 @@ function drow()
 		};
 	}
 
-	console.log(map);
+	// console.log(map);
 
 }
+
+$('#color-picker').on('change', function(e)
+{
+	var new_color = $(this).val();
+	$('#color-select').css({
+		'background-color': new_color
+	});
+});
+
+$('.draw-mode').click(function(e)
+{
+	$('.draw-mode').removeAttr('data-active');
+	$(this).attr('data-active', '');
+});

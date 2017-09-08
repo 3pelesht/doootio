@@ -59,7 +59,7 @@
     display: flex;
 }
 
-.tools span {
+.tools [class^="icon-"] {
     line-height: 32px;
 
     width: 32px;
@@ -69,16 +69,8 @@
 
     border-radius: 2px;
     background-color: #fff;
-}
 
-.tools.horizontal label {
-    line-height: 32px;
-
-    width: 80px;
-    margin: 0;
-    padding: 0 5px;
-
-    background-color: #ececec;
+    box-shadow: 0 0 1px #333;
 }
 
 .tools.vertical {
@@ -135,4 +127,24 @@
 
 .frames .frame:nth-last-child(2) {
     margin: 0;
+}
+
+#color-select input {
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.drawing-tools > [class^="icon-"] {
+    margin-right: 5px;
+}
+
+.frame-tools > [class^="icon-"] {
+    margin-left: 5px;
+}
+
+.drawing-tools [data-active] {
+    background-color: #333;
+    color: #fff;
 }

@@ -8,7 +8,7 @@
 	<meta name="author" content="Ali Kharidar, Hasan Salehi, Ahmad Karimi">
 	<link rel="stylesheet" type="text/css" href="static/css/bootstrap-reboot.css">
 	<link rel="stylesheet" type="text/css" href="static/css/style.css">
-	<link rel="stylesheet" type="text/css" href="static/font/doootio.v2/style.css">
+	<link rel="stylesheet" type="text/css" href="static/font/doootio.v3/style.css">
 	<link rel="stylesheet" type="text/css" href="static/css/board.css">
 </head>
 <body>
@@ -48,13 +48,16 @@
 			</div>
 
 			<div class="tools horizontal">
-				<div>
-					<span class="icon-pencil"></span>
-					<span class="icon-eraser" id="eraser"></span>
-					<span class="icon-eyedropper" id="color-select"></span>
+				<div class="drawing-tools">
+					<span class="icon-pencil draw-mode" id="pencil" data-active></span>
+					<span class="icon-eraser draw-mode" id="eraser"></span>
+					<span class="icon-eyedropper draw-mode" id="eyedropper"></span>
+					<label class="icon-droplet" id="color-select">
+						<input type="color" value="#eeeeee" id="color-picker">
+					</label>
 					<span class="icon-paint-format"></span>
 				</div>
-				<div>
+				<div class="frame-tools">
 					<span class="icon-stop2"></span>
 					<span class="icon-play3"></span>
 					<span class="icon-pause2"></span>
