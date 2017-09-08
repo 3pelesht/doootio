@@ -129,7 +129,7 @@
     margin: 0;
 }
 
-#color-select input {
+#color-select input, #boardBackground {
     width: 0;
     height: 0;
     position: absolute;

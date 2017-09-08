@@ -43,29 +43,35 @@ $(document).on('mouseup', function(){
 
 function drow()
 {
-	var eraser = $('#eraser').is('[data-active]');
-	var color_select = $('#color-select').css('background-color');
+	var mode = $('.draw-mode[data-active]').attr('id');
 	var map_name = this.dootioLocation.row + '_' + this.dootioLocation.cell;
-	if (eraser)
+	var color_select = $('#color-select').css('background-color');
+	switch(mode)
 	{
-		this.style.backgroundColor = "";
-		if(map[map_name])
-		{
-			delete map[map_name];
-		}
+		case 'eraser':
+			this.style.backgroundColor = "";
+			if(map[map_name])
+			{
+				delete map[map_name];
+			}
+			break;
+		case 'eyedropper':
+			var color = this.style.backgroundColor;
+			if (color == '') return;
+			$('#color-picker').val('#' + rgb2hex(color));
+			$('#color-select').css({
+				'background-color': '#' + rgb2hex(color)
+			});
+			break;
+		default:
+			this.style.backgroundColor = color_select;
+			map[map_name] = {
+				row : this.dootioLocation.row,
+				cell : this.dootioLocation.cell,
+				color : rgb2hex(color_select)
+			};
+			break;
 	}
-	else
-	{
-		this.style.backgroundColor = color_select;
-		map[map_name] = {
-			row : this.dootioLocation.row,
-			cell : this.dootioLocation.cell,
-			color : rgb2hex(color_select)
-		};
-	}
-
-	// console.log(map);
-
 }
 
 $('#color-picker').on('change', function(e)
@@ -76,8 +82,18 @@ $('#color-picker').on('change', function(e)
 	});
 });
 
+$('#boardBackground').on('change', function(e)
+{
+	var board_color = $(this).val();
+	$('.row').css({
+		'background-color': board_color
+	});
+});
+
 $('.draw-mode').click(function(e)
 {
 	$('.draw-mode').removeAttr('data-active');
 	$(this).attr('data-active', '');
 });
+
+
