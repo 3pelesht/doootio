@@ -116,28 +116,11 @@ $('[data-shift]').click(function(e)
 			map.unshift([]);
 			start.y++;
 
-			console.log(map.length);
-			for (var i = 1; i < map.length - 1; i++)
+			for (var i = 1; i <= map.length - 1; i++)
 			{
 				map[i - 1] = map[i];
 			}
-			$('[data-cell]').css({
-				'background-color': 'initial'
-			});
-			$('.row').each(function(i)
-			{
-				$('[data-cell]', this).each(function(j)
-				{
-					if(!map[i + start.y]) return;
-					var hasColor = map[i + start.y][j + start.x];
-					if (hasColor)
-					{
-						$(this).css({
-							'background-color': hasColor.color
-						});
-					}
-				});
-			});
+			map[map.length - 1] = new Array();
 			break;
 		case 'down':
 			if(start.y - 1 < 0){
@@ -147,46 +130,44 @@ $('[data-shift]').click(function(e)
 				{
 					map[i + 1] = map[i];
 				}
-				map[0] = null;
+				map[0] = new Array();
 			}
 			else
 			{
 				start.y--
 			}
-			console.log(start.y);
-			console.log(map.length);
-			$('[data-cell]').css({
-				'background-color': 'initial'
-			});
-			$('.row').each(function(i)
-			{
-				if (!map[i + start.y] || map[i + start.y].length == 0) return;
-				$('[data-cell]', this).each(function(j)
-				{
-					var hasColor = map[i + start.y][j + start.x];
-					if (hasColor)
-					{
-						$(this).css({
-							'background-color': hasColor.color
-						});
-					}
-				});
-			});
 			break;
-		case 'right':
-			for (var i = 0; i < map.length; i++)
-			{
-				map[i].push(null);
-			}
-			start.x--;
-			break;
-
 		case 'left':
 			for (var i = 0; i < map.length; i++)
 			{
 				map[i].unshift(null);
+				for (var j = 1; j <= map[i].length - 1; j++) {
+					map[i][j - 1] = map[i][j];
+				};
+				map[i][map[i].length - 1] = new Array();
 			}
 			start.x++;
 			break;
+
+		case 'right':
+			start.x--;
+			break;
 	}
+	$('[data-cell]').css({
+		'background-color': 'initial'
+	});
+	$('.row').each(function(i)
+	{
+		$('[data-cell]', this).each(function(j)
+		{
+			if(!map[i + start.y]) return;
+			var hasColor = map[i + start.y][j + start.x];
+			if (hasColor)
+			{
+				$(this).css({
+					'background-color': hasColor.color
+				});
+			}
+		});
+	});
 });
