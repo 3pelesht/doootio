@@ -54,6 +54,8 @@ function createElement()
 				{
 					this._row = value;
 				}
+				$(".row").children('[data-cell]').removeClass('hover');
+				$(".row").eq(this._row).children('[data-cell]').eq(this._cell).addClass('hover');
 			}
 		});
 
@@ -76,6 +78,8 @@ function createElement()
 				{
 					this._cell = value;
 				}
+				$(".row").children('[data-cell]').removeClass('hover');
+				$(".row").eq(this._row).children('[data-cell]').eq(this._cell).addClass('hover');
 			}
 		});
 	}
@@ -134,6 +138,8 @@ function drow()
 			{
 				color : '#' + rgb2hex(color_select)
 			};
+			$("#table")[0].currentDoootioLocation.row = this.doootioLocation.row + start.y;
+			$("#table")[0].currentDoootioLocation.cell = this.doootioLocation.cell + start.x;
 			break;
 	}
 }
@@ -231,10 +237,6 @@ $(document).on('keydown', function(e)
 {
 	var key = e.key;
 	var location = $("#table")[0].currentDoootioLocation;
-	if(['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].indexOf(key) >= 0)
-	{
-		$(".row").children('[data-cell]').removeClass('hover');
-	}
 	switch(key)
 	{
 		case 'ArrowUp':
@@ -249,10 +251,9 @@ $(document).on('keydown', function(e)
 		case 'ArrowLeft':
 			location.cell--;
 			break;
-	}
-	if(['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].indexOf(key) >= 0)
-	{
-		$(".row").eq(location.row).children('[data-cell]').eq(location.cell).addClass('hover');
+		case ' ':
+			drow.call($(".row").eq(location.row).children('[data-cell]').eq(location.cell)[0]);
+			break;
 	}
 
 });
