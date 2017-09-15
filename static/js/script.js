@@ -134,7 +134,7 @@ function drow()
 			break;
 		default:
 			this.style.backgroundColor = color_select;
-			map[this.doootioLocation.row + start.y][this.doootioLocation.cell + start.x] =
+			map[this.doootioLocation.row][this.doootioLocation.cell] =
 			{
 				color : '#' + rgb2hex(color_select)
 			};
