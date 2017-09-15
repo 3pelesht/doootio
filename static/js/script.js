@@ -20,11 +20,64 @@ function createElement()
 			map[i][j] = null;
 			var cell = document.createElement('div');
 			cell.setAttribute('data-cell', '');
-			cell.dootioLocation = {'row' : i, 'cell' : j};
+			cell.doootioLocation = {'row' : i, 'cell' : j};
 			row.appendChild(cell);
 		}
 
 		document.getElementById('table').appendChild(row);
+		document.getElementById('table').currentDoootioLocation =
+		{
+			row: 0,
+			cell: 0,
+			_row: 0,
+			_cell: 0
+		};
+
+		$(".row").eq(document.getElementById('table').currentDoootioLocation.row).children('[data-cell]').eq(document.getElementById('table').currentDoootioLocation.cell).addClass('hover');
+
+		Object.defineProperty(document.getElementById('table').currentDoootioLocation, 'row', {
+			get: function()
+			{
+				return this._row;
+			},
+			set: function(value)
+			{
+				if (value < 0)
+				{
+					this._row = rows - 1;
+				}
+				else if (value >= rows)
+				{
+					this._row = 0;
+				}
+				else
+				{
+					this._row = value;
+				}
+			}
+		});
+
+		Object.defineProperty(document.getElementById('table').currentDoootioLocation, 'cell', {
+			get: function()
+			{
+				return this._cell;
+			},
+			set: function(value)
+			{
+				if (value < 0)
+				{
+					this._cell = cols - 1;
+				}
+				else if (value >= cols)
+				{
+					this._cell = 0;
+				}
+				else
+				{
+					this._cell = value;
+				}
+			}
+		});
 	}
 }
 
@@ -62,9 +115,9 @@ function drow()
 	{
 		case 'eraser':
 			this.style.backgroundColor = "";
-			if(map[this.dootioLocation.row + start.y])
+			if(map[this.doootioLocation.row + start.y])
 			{
-				map[this.dootioLocation.row + start.y][this.dootioLocation.cell + start.x] = null;
+				map[this.doootioLocation.row + start.y][this.doootioLocation.cell + start.x] = null;
 			}
 			break;
 		case 'eyedropper':
@@ -77,7 +130,7 @@ function drow()
 			break;
 		default:
 			this.style.backgroundColor = color_select;
-			map[this.dootioLocation.row + start.y][this.dootioLocation.cell + start.x] =
+			map[this.doootioLocation.row + start.y][this.doootioLocation.cell + start.x] =
 			{
 				color : '#' + rgb2hex(color_select)
 			};
@@ -170,4 +223,36 @@ $('[data-shift]').click(function(e)
 			}
 		});
 	});
+});
+
+
+
+$(document).on('keydown', function(e)
+{
+	var key = e.key;
+	var location = $("#table")[0].currentDoootioLocation;
+	if(['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].indexOf(key) >= 0)
+	{
+		$(".row").children('[data-cell]').removeClass('hover');
+	}
+	switch(key)
+	{
+		case 'ArrowUp':
+			location.row--;
+			break;
+		case 'ArrowDown':
+			location.row++;
+			break;
+		case 'ArrowRight':
+			location.cell++;
+			break;
+		case 'ArrowLeft':
+			location.cell--;
+			break;
+	}
+	if(['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].indexOf(key) >= 0)
+	{
+		$(".row").eq(location.row).children('[data-cell]').eq(location.cell).addClass('hover');
+	}
+
 });

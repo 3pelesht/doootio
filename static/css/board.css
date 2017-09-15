@@ -148,3 +148,8 @@
     background-color: #333;
     color: #fff;
 }
+
+.hover {
+    outline: 1px solid red;
+    z-index: 2;
+}
