@@ -276,6 +276,7 @@ $( ".frame" ).click(function()
 		{
 			maps[i] = JSON.parse(JSON.stringify(maps[maps.length]));
 			maps.length++;
+			$('.frame').eq(i - 1).addClass('on');
 		}
 	}
 
