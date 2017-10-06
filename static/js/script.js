@@ -1,23 +1,34 @@
 var rows = 36;
 var cols = 64;
-var map  = [];
-var start =
-{
+var maps = {};
+maps.length = 1;
+_FRAMENUMBER = 1;
+maps["1"] = {map:[]};
+maps[_FRAMENUMBER].start = {
 	x: 0,
 	y: 0
 };
+
+function rgb2hex(rgb)
+{
+	rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+	return (rgb && rgb.length === 4) ?
+		("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+		("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+		("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+}
 
 function createElement()
 {
 	for (var i = 0; i < rows; i++)
 	{
-		map[i] = [];
+		maps[_FRAMENUMBER].map[i] = [];
 		var row = document.createElement('div');
 		row.setAttribute('class', 'row');
 
 		for (var j = 0; j < cols ; j++)
 		{
-			map[i][j] = null;
+			maps[_FRAMENUMBER].map[i][j] = null;
 			var cell = document.createElement('div');
 			cell.setAttribute('data-cell', '');
 			cell.doootioLocation = {'row' : i, 'cell' : j};
@@ -87,28 +98,21 @@ function createElement()
 
 createElement();
 
-function rgb2hex(rgb)
-{
-	rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-	return (rgb && rgb.length === 4) ?
-		("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-		("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-		("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
-}
+maps["1"].backgroundColor = '#' + rgb2hex($('.row').css('background-color'));
 
 $("#table").bind('mousedown', function(event)
 {
 
 	drow.call(event.target);
 
-	$(this).bind('mousemove.ifDOwn', function(event)
+	$(this).bind('mousemove.ifDown', function(event)
 	{
 		drow.call(event.target);
 	});
 });
 
 $(document).on('mouseup', function(){
-	$("#table").unbind('mousemove.ifDOwn');
+	$("#table").unbind('mousemove.ifDown');
 });
 
 function drow()
@@ -119,9 +123,9 @@ function drow()
 	{
 		case 'eraser':
 			this.style.backgroundColor = "";
-			if(map[this.doootioLocation.row + start.y])
+			if(maps[_FRAMENUMBER].map[this.doootioLocation.row + maps[_FRAMENUMBER].start.y])
 			{
-				map[this.doootioLocation.row + start.y][this.doootioLocation.cell + start.x] = null;
+				maps[_FRAMENUMBER].map[this.doootioLocation.row + maps[_FRAMENUMBER].start.y][this.doootioLocation.cell + maps[_FRAMENUMBER].start.x] = null;
 			}
 			break;
 		case 'eyedropper':
@@ -134,12 +138,12 @@ function drow()
 			break;
 		default:
 			this.style.backgroundColor = color_select;
-			map[this.doootioLocation.row][this.doootioLocation.cell] =
+			maps[_FRAMENUMBER].map[this.doootioLocation.row][this.doootioLocation.cell] =
 			{
 				color : '#' + rgb2hex(color_select)
 			};
-			$("#table")[0].currentDoootioLocation.row = this.doootioLocation.row + start.y;
-			$("#table")[0].currentDoootioLocation.cell = this.doootioLocation.cell + start.x;
+			$("#table")[0].currentDoootioLocation.row = this.doootioLocation.row + maps[_FRAMENUMBER].start.y;
+			$("#table")[0].currentDoootioLocation.cell = this.doootioLocation.cell + maps[_FRAMENUMBER].start.x;
 			break;
 	}
 }
@@ -158,6 +162,7 @@ $('#boardBackground').on('change', function(e)
 	$('.row').css({
 		'background-color': board_color
 	});
+	maps[_FRAMENUMBER].backgroundColor = board_color;
 });
 
 $('.draw-mode').click(function(e)
@@ -172,44 +177,44 @@ $('[data-shift]').click(function(e)
 	switch(shift)
 	{
 		case 'up':
-			map.unshift([]);
-			start.y++;
+			maps[_FRAMENUMBER].map.unshift([]);
+			maps[_FRAMENUMBER].start.y++;
 
-			for (var i = 1; i <= map.length - 1; i++)
+			for (var i = 1; i <= maps[_FRAMENUMBER].map.length - 1; i++)
 			{
-				map[i - 1] = map[i];
+				maps[_FRAMENUMBER].map[i - 1] = maps[_FRAMENUMBER].map[i];
 			}
-			map[map.length - 1] = new Array();
+			maps[_FRAMENUMBER].map[maps[_FRAMENUMBER].map.length - 1] = new Array();
 			break;
 		case 'down':
-			if(start.y - 1 < 0){
-				map.push([]);
-				start.y = 0
-				for (var i = map.length - 2; i >= 0; i--)
+			if(maps[_FRAMENUMBER].start.y - 1 < 0){
+				maps[_FRAMENUMBER].map.push([]);
+				maps[_FRAMENUMBER].start.y = 0
+				for (var i = maps[_FRAMENUMBER].map.length - 2; i >= 0; i--)
 				{
-					map[i + 1] = map[i];
+					maps[_FRAMENUMBER].map[i + 1] = maps[_FRAMENUMBER].map[i];
 				}
-				map[0] = new Array();
+				maps[_FRAMENUMBER].map[0] = new Array();
 			}
 			else
 			{
-				start.y--
+				maps[_FRAMENUMBER].start.y--
 			}
 			break;
 		case 'left':
-			for (var i = 0; i < map.length; i++)
+			for (var i = 0; i < maps[_FRAMENUMBER].map.length; i++)
 			{
-				map[i].unshift(null);
-				for (var j = 1; j <= map[i].length - 1; j++) {
-					map[i][j - 1] = map[i][j];
+				maps[_FRAMENUMBER].map[i].unshift(null);
+				for (var j = 1; j <= maps[_FRAMENUMBER].map[i].length - 1; j++) {
+					maps[_FRAMENUMBER].map[i][j - 1] = maps[_FRAMENUMBER].map[i][j];
 				};
-				map[i][map[i].length - 1] = new Array();
+				maps[_FRAMENUMBER].map[i][maps[_FRAMENUMBER].map[i].length - 1] = new Array();
 			}
-			start.x++;
+			maps[_FRAMENUMBER].start.x++;
 			break;
 
 		case 'right':
-			start.x--;
+			maps[_FRAMENUMBER].start.x--;
 			break;
 	}
 	$('[data-cell]').css({
@@ -219,8 +224,8 @@ $('[data-shift]').click(function(e)
 	{
 		$('[data-cell]', this).each(function(j)
 		{
-			if(!map[i + start.y]) return;
-			var hasColor = map[i + start.y][j + start.x];
+			if(!maps[_FRAMENUMBER].map[i + maps[_FRAMENUMBER].start.y]) return;
+			var hasColor = maps[_FRAMENUMBER].map[i + maps[_FRAMENUMBER].start.y][j + maps[_FRAMENUMBER].start.x];
 			if (hasColor)
 			{
 				$(this).css({
@@ -258,10 +263,44 @@ $(document).on('keydown', function(e)
 
 });
 
+
 $( ".frame" ).click(function()
 {
 	$(".frame").removeClass('active');
 	$(this).addClass('active');
+	_FRAMENUMBER = $(this).attr('data-frame');
+
+	if (!maps[_FRAMENUMBER])
+	{
+		for (var i = maps.length + 1; i <= _FRAMENUMBER; i++)
+		{
+			maps[i] = JSON.parse(JSON.stringify(maps[maps.length]));
+			maps.length++;
+		}
+	}
+
+	$('.row').css({
+		'background-color': maps[_FRAMENUMBER].backgroundColor
+	});
+
+	$('.row').each(function(i)
+	{
+		$('[data-cell]', this).each(function(j)
+		{
+			if(!maps[_FRAMENUMBER].map[i + maps[_FRAMENUMBER].start.y]) return;
+			$(this).css({
+				'background-color': 'initial'
+			});
+			var hasColor = maps[_FRAMENUMBER].map[i + maps[_FRAMENUMBER].start.y][j + maps[_FRAMENUMBER].start.x];
+			if (hasColor)
+			{
+				$(this).css({
+					'background-color': hasColor.color
+				});
+			}
+		});
+	});
 });
+
 
 
