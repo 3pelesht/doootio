@@ -328,6 +328,9 @@ $('.play').click(function(e)
 			{
 				_FRAMENUMBER = 1;
 			}
+			$('.row').css({
+				'background-color': maps[_FRAMENUMBER].backgroundColor
+			});
 			mapDraw();
 			$('.frame').removeClass('active');
 			$('.frame').eq(_FRAMENUMBER - 1).addClass('active');
