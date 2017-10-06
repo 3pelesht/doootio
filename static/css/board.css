@@ -59,7 +59,7 @@
     display: flex;
 }
 
-.tools [class^="icon-"] {
+.tools [class*="icon-"] {
     line-height: 32px;
 
     width: 32px;
@@ -152,11 +152,13 @@
     z-index: -1;
 }
 
-.drawing-tools > [class^="icon-"] {
+
+
+.drawing-tools > [class*="icon-"] {
     margin-right: 5px;
 }
 
-.frame-tools > [class^="icon-"] {
+.frame-tools > [class*="icon-"] {
     margin-left: 5px;
 }
 

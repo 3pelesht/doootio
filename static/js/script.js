@@ -98,6 +98,27 @@ function createElement()
 
 createElement();
 
+function mapDraw()
+{
+	$('.row').each(function(i)
+	{
+		$('[data-cell]', this).each(function(j)
+		{
+			if(!maps[_FRAMENUMBER].map[i + maps[_FRAMENUMBER].start.y]) return;
+			$(this).css({
+				'background-color': 'initial'
+			});
+			var hasColor = maps[_FRAMENUMBER].map[i + maps[_FRAMENUMBER].start.y][j + maps[_FRAMENUMBER].start.x];
+			if (hasColor)
+			{
+				$(this).css({
+					'background-color': hasColor.color
+				});
+			}
+		});
+	});
+}
+
 maps["1"].backgroundColor = '#' + rgb2hex($('.row').css('background-color'));
 
 $("#table").bind('mousedown', function(event)
@@ -284,24 +305,32 @@ $( ".frame" ).click(function()
 		'background-color': maps[_FRAMENUMBER].backgroundColor
 	});
 
-	$('.row').each(function(i)
-	{
-		$('[data-cell]', this).each(function(j)
-		{
-			if(!maps[_FRAMENUMBER].map[i + maps[_FRAMENUMBER].start.y]) return;
-			$(this).css({
-				'background-color': 'initial'
-			});
-			var hasColor = maps[_FRAMENUMBER].map[i + maps[_FRAMENUMBER].start.y][j + maps[_FRAMENUMBER].start.x];
-			if (hasColor)
-			{
-				$(this).css({
-					'background-color': hasColor.color
-				});
-			}
-		});
-	});
+	mapDraw();
 });
 
+var animator = null;
 
-
+$('.play').click(function(e)
+{
+	$(this).toggleClass('icon-play3 icon-pause2');
+	if ( $(this).hasClass('icon-play3') )
+	{
+		// pause
+		clearInterval(animator);
+	}
+	else
+	{
+		// play
+		animator = setInterval(function()
+		{
+			_FRAMENUMBER++;
+			if (!maps[_FRAMENUMBER])
+			{
+				_FRAMENUMBER = 1;
+			}
+			mapDraw();
+			$('.frame').removeClass('active');
+			$('.frame').eq(_FRAMENUMBER - 1).addClass('active');
+		}, 1000);
+	}
+});
