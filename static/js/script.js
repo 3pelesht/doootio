@@ -257,3 +257,11 @@ $(document).on('keydown', function(e)
 	}
 
 });
+
+$( ".frame" ).click(function()
+{
+	$(".frame").removeClass('active');
+	$(this).addClass('active');
+});
+
+
