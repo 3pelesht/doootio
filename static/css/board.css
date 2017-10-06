@@ -129,6 +129,16 @@
     margin: 0;
 }
 
+.frames .frame:hover {
+    box-shadow: 0 0 5px #333;
+    transition: 0.2s;
+}
+
+.frames .frame.active {
+    background-color: #333;
+    color: #fff;
+}
+
 #color-select input, #boardBackground {
     width: 0;
     height: 0;
