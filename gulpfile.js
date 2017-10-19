@@ -8,7 +8,7 @@ const concat       = require('gulp-concat');
 const uglify       = require('gulp-uglify');
 
 gulp.task('sass', function() {
-	return gulp.src('./src/sass/**/*.scss')
+	return gulp.src('./src/sass/style.scss')
 		.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
 		.pipe(autoprefixer())

@@ -308,32 +308,19 @@ $( ".frame" ).click(function()
 	mapDraw();
 });
 
-var animator = null;
-
-$('.play').click(function(e)
+$('.icon-fps').click(function(e)
 {
-	$(this).toggleClass('icon-play3 icon-pause2');
-	if ( $(this).hasClass('icon-play3') )
+	var fps = $(this).attr('data-fps');
+	switch (fps)
 	{
-		// pause
-		clearInterval(animator);
-	}
-	else
-	{
-		// play
-		animator = setInterval(function()
-		{
-			_FRAMENUMBER++;
-			if (!maps[_FRAMENUMBER])
-			{
-				_FRAMENUMBER = 1;
-			}
-			$('.row').css({
-				'background-color': maps[_FRAMENUMBER].backgroundColor
-			});
-			mapDraw();
-			$('.frame').removeClass('active');
-			$('.frame').eq(_FRAMENUMBER - 1).addClass('active');
-		}, 1000);
+		case '1':
+			$(this).attr('data-fps', '0.5');
+			break;
+		case '0.5':
+			$(this).attr('data-fps', '0.25');
+			break;
+		case '0.25':
+			$(this).attr('data-fps', '1');
+			break;
 	}
 });
