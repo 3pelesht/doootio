@@ -3,6 +3,7 @@ var cols = 64;
 var maps = {};
 maps.length = 1;
 _FRAMENUMBER = 1;
+var Animate_Is_Run;
 maps["1"] = {
 	map: []
 };
@@ -126,7 +127,7 @@ maps["1"].backgroundColor = '#' + rgb2hex($('.row').css('background-color'));
 
 $("#table").bind('mousedown', function(event)
 {
-
+	if (Animate_Is_Run) return false;
 	drow.call(event.target);
 
 	$(this).bind('mousemove.ifDown', function(event)
@@ -191,12 +192,14 @@ $('#boardBackground').on('change', function(e)
 
 $('.draw-mode').click(function(e)
 {
+	if (Animate_Is_Run) return false;
 	$('.draw-mode').removeAttr('data-active');
 	$(this).attr('data-active', '');
 });
 
 $('[data-shift]').click(function(e)
 {
+	if (Animate_Is_Run) return false;
 	var shift = $(this).attr('data-shift');
 	switch(shift)
 	{
@@ -264,6 +267,7 @@ $('[data-shift]').click(function(e)
 
 $(document).on('keydown', function(e)
 {
+	if (Animate_Is_Run) return false;
 	var key = e.key;
 	var location = $("#table")[0].currentDoootioLocation;
 	switch(key)
@@ -290,6 +294,7 @@ $(document).on('keydown', function(e)
 
 $( ".frame" ).click(function()
 {
+	if (Animate_Is_Run) return false;
 	$(".frame").removeClass('active');
 	$(this).addClass('active');
 	_FRAMENUMBER = $(this).attr('data-frame');
@@ -313,6 +318,7 @@ $( ".frame" ).click(function()
 
 $('.icon-fps').click(function(e)
 {
+	if (Animate_Is_Run) return false;
 	var fps = $(this).attr('data-fps');
 	switch (fps)
 	{
@@ -328,4 +334,14 @@ $('.icon-fps').click(function(e)
 	}
 	$(this).attr('data-fps', fps);
 	maps[_FRAMENUMBER].fps = fps;
+});
+
+$('#color-select').click(function(event)
+{
+	if (Animate_Is_Run) return false;
+});
+
+$('#mapBackground').click(function(event)
+{
+	if (Animate_Is_Run) return false;
 });

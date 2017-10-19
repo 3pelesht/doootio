@@ -8,11 +8,13 @@ $('.play').click(function(e)
 	if ( $(this).hasClass('icon-play3') )
 	{
 		// pause
+		Animate_Is_Run = false;
 		clearInterval(animator);
 	}
 	else
 	{
 		// play
+		Animate_Is_Run = true;
 		animator = setInterval(function()
 		{
 			_FRAMENUMBER++;
@@ -23,6 +25,7 @@ $('.play').click(function(e)
 			$('.row').css({
 				'background-color': maps[_FRAMENUMBER].backgroundColor
 			});
+
 			mapDraw();
 			$('.frame').removeClass('active');
 			$('.frame').eq(_FRAMENUMBER - 1).addClass('active');
