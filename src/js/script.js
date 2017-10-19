@@ -3,11 +3,14 @@ var cols = 64;
 var maps = {};
 maps.length = 1;
 _FRAMENUMBER = 1;
-maps["1"] = {map:[]};
+maps["1"] = {
+	map: []
+};
 maps[_FRAMENUMBER].start = {
 	x: 0,
 	y: 0
 };
+maps[_FRAMENUMBER].fps = $('.icon-fps').attr('data-fps');
 
 function rgb2hex(rgb)
 {
@@ -314,13 +317,15 @@ $('.icon-fps').click(function(e)
 	switch (fps)
 	{
 		case '1':
-			$(this).attr('data-fps', '0.5');
+			fps = 0.5;
 			break;
 		case '0.5':
-			$(this).attr('data-fps', '0.25');
+			fps = 0.25;
 			break;
 		case '0.25':
-			$(this).attr('data-fps', '1');
+			fps = 1;
 			break;
 	}
+	$(this).attr('data-fps', fps);
+	maps[_FRAMENUMBER].fps = fps;
 });
