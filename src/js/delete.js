@@ -2,7 +2,6 @@ $('.icon-bin').click(function(event)
 {
 	delete maps[_FRAMENUMBER];
 	var length = maps.length--;
-	var position = null;
 	if(length > _FRAMENUMBER)
 	{
 		for (var i = parseInt(_FRAMENUMBER); i < length; i++) {
@@ -34,7 +33,6 @@ $('.icon-bin').click(function(event)
 		$("[data-frame="+_FRAMENUMBER+"]").removeClass('active').removeClass('on');
 		_FRAMENUMBER--;
 		$("[data-frame="+_FRAMENUMBER+"]").addClass('active');
-		delete maps[length];
 	}
 	mapDraw();
 });
