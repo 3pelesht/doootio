@@ -8,15 +8,7 @@ function runAnimation()
 		_FRAMENUMBER = 1;
 	}
 
-	$('.row').css({
-		'background-color': maps[_FRAMENUMBER].backgroundColor
-	});
-
 	mapDraw();
-
-	$('.frame').removeClass('active');
-	$('.frame').eq(_FRAMENUMBER - 1).addClass('active');
-	$('.icon-fps').attr('data-fps', maps[_FRAMENUMBER].fps);
 
 	// Execute function 'run' every ... second
 	var milliSeconds = maps[_FRAMENUMBER].fps * 1000;
@@ -39,5 +31,17 @@ $('.play').click(function(e)
 		var milliSeconds = maps[_FRAMENUMBER].fps * 1000;
 		// runAnimation();
 		animator = setTimeout('runAnimation()', milliSeconds);
+	}
+});
+
+$('.stop').click(function()
+{
+	_FRAMENUMBER = 1;
+	mapDraw();
+	Animate_Is_Run = false;
+	clearTimeout(animator);
+	if ( $('.play').is('.icon-pause2') )
+	{
+		$('.play').toggleClass('icon-play3 icon-pause2');
 	}
 });

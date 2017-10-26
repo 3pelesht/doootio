@@ -104,6 +104,14 @@ createElement();
 
 function mapDraw()
 {
+	$('.frame').removeClass('active');
+	$('.frame').eq(_FRAMENUMBER - 1).addClass('active');
+	$('.icon-fps').attr('data-fps', maps[_FRAMENUMBER].fps);
+
+	$('.row').css({
+		'background-color': maps[_FRAMENUMBER].backgroundColor
+	});
+
 	$('.row').each(function(i)
 	{
 		$('[data-cell]', this).each(function(j)
