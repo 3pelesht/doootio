@@ -64,23 +64,28 @@
 					<span class="icon-previous2 prev"></span>
 					<span class="icon-next2 next"></span>
 					<span class="icon-fps" data-fps='1'></span>
-					<span class="icon-plus"></span>
 					<span class="icon-bin"></span>
 				</div>
 			</div>
 
-			<div class="frames">
-				<span class="icon-arrow-left2"></span>
-				<span class="frame on active" data-frame='1'>1</span>
-				<span class="frame" data-frame='2'>2</span>
-				<span class="frame" data-frame='3'>3</span>
-				<span class="frame" data-frame='4'>4</span>
-				<span class="frame" data-frame='5'>5</span>
-				<span class="frame" data-frame='6'>6</span>
-				<span class="frame" data-frame='7'>7</span>
-				<span class="frame" data-frame='8'>8</span>
-				<span class="frame" data-frame='9'>9</span>
-				<span class="icon-arrow-right2"></span>
+			<div class="frames-container">
+				<span id="navLeft" class="icon-arrow-left2"></span>
+				<div class="frames">
+					<div class="frames-track">
+						<div class="frame on active" data-frame='1'>1</div>
+						<div class="frame" data-frame='2'>2</div>
+						<div class="frame" data-frame='3'>3</div>
+						<div class="frame" data-frame='4'>4</div>
+						<div class="frame" data-frame='5'>5</div>
+						<div class="frame" data-frame='6'>6</div>
+						<div class="frame" data-frame='7'>7</div>
+						<div class="frame" data-frame='8'>8</div>
+					</div>
+				</div>
+				<div id="addFrame" class="" data-frame='plus'>
+					<span class="icon-plus"></span>
+				</div>
+				<span id="navRight" class="icon-arrow-right2"></span>
 			</div>
 		</div>
 	</div>
@@ -94,5 +99,40 @@
 	</div>
 
 	<script type="text/javascript" src="./dist/js/main.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			var trans = 0;
+			$('#addFrame').click(function()
+			{
+				var index = $('.frame').length + 1;
+				var newFrame = $('<div></div>').attr('class', 'frame').attr('data-frame', index).text(index);
+				trans = trans - 58;
+				$('.frames-track').append(newFrame).css({
+					'transform': 'translate(' + trans + 'px,0)'
+				});
+				console.log(trans);
+			});
+
+			$('#navRight').click(function()
+			{
+				trans = trans - 58;
+				$('.frames-track').css({
+					'transform': 'translate(' + trans + 'px,0)'
+				});
+			});
+
+			$('#navLeft').click(function()
+			{
+				if (trans != 0)
+				{
+					trans = trans + 58;
+					$('.frames-track').css({
+						'transform': 'translate(' + trans + 'px,0)'
+					});
+				}
+			});
+		});
+	</script>
 </body>
 </html>

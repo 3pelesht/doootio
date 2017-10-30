@@ -85,39 +85,42 @@
     margin-bottom: 8px;
 }
 
-.frames {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+.frames-container {
     display: flex;
-
-    width: 100%;
-
-    -ms-flex-pack: center;
-    justify-content: center;
 }
 
-.frames .icon-arrow-left2,
-.frames .icon-arrow-right2 {
+#navLeft, #navRight {
     line-height: 27px;
-
     height: 27px;
 }
 
-.frames .icon-arrow-left2 {
+#navLeft {
     margin-right: 10px;
 }
 
-.frames .icon-arrow-right2 {
+#navRight {
     margin-left: 10px;
 }
 
-.frames .frame {
+.frames {
+    max-width: 460px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.frames, .frames-track {
+    display: flex;
+}
+
+.frames-track {
+    transition: 0.5s;
+}
+
+.frame, #addFrame {
     line-height: 27px;
 
     width: 48px;
     height: 27px;
-    margin-right: 10px;
 
     cursor: default;
     text-align: center;
@@ -126,21 +129,21 @@
     box-shadow: 0 0 1px #666;
 }
 
-.frames .frame:nth-last-child(2) {
-    margin: 0;
+.frames-track div:not(:last-child) {
+    margin-right: 10px;
 }
 
-.frames .frame:hover {
+.frame:hover {
     box-shadow: 0 0 5px #333;
     transition: 0.2s;
 }
 
-.frames .frame.on {
+.frame.on {
     background-color: #fff;
     color: #333;
 }
 
-.frames .frame.active {
+.frame.active {
     background-color: #333;
     color: #fff;
 }
