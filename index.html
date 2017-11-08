@@ -116,6 +116,12 @@
 
 			$('#navRight').click(function()
 			{
+				var totalLength = $('.frame').length * 58;
+				var defaultLength = 8 * 58;
+				if ( totalLength - defaultLength + trans <= 0 )
+				{
+					return;
+				}
 				trans = trans - 58;
 				$('.frames-track').css({
 					'transform': 'translate(' + trans + 'px,0)'

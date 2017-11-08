@@ -1,5 +1,6 @@
 $('.icon-bin').click(function(event)
 {
+	if (Animate_Is_Run) return false;
 	delete maps[_FRAMENUMBER];
 	var length = maps.length--;
 	if(length > _FRAMENUMBER)
